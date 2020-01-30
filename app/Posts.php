@@ -17,7 +17,7 @@ class Posts extends Model
      *
      * @var string
      */
-    // protected $primaryKey = 'id_post';
+    protected $primaryKey = 'id_post';
 
     protected $fillable = ['title', 'description', 'content', 'image', 'id_cat'];
 

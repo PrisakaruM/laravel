@@ -1,6 +1,8 @@
-@extends('layouts/admin')
-
-@section('content')
+<style>
+    .swal2-container {
+        z-index: 99999;
+    }
+</style>
 
 <div class="content-wrapper">
     @if ($errors->any())
@@ -12,7 +14,6 @@
             </ul>
         </div>
     @endif
-    <div class="col-md-6">
         <!-- general form elements -->
         <div class="card card-primary">
         <div class="card-header">
@@ -58,6 +59,46 @@
         </form>
         </div>
         <!-- /.card -->
-    </div>
 </div>
-@endsection
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+<script>
+    $(function() {
+        $('#post-form').on('submit', function(e) {
+            e.preventDefault();
+            console.log('success');
+
+            $.ajax({
+                type  : "POST",
+                url   : $(this).attr('action'),
+                data  : $(this).serializeArray(),
+                cache : false,
+                dataType: "json",
+                success: function (res){
+                    if(res.status === 'success'){
+                        window.location = "{{route('post.index')}}";
+                    }else{
+                        response = '';
+                        $.each(res.errors, function(i) {
+                            response += res.errors[i][0] + '\n';
+                        });
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            onOpen: (toast) => {
+                                toast.addEventListener('mouseenter', Swal.stopTimer)
+                                toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+
+                        Toast.fire({
+                            icon: 'warning',
+                            title: response
+                        })
+                    }
+                }
+            });
+        });
+    });
+</script>

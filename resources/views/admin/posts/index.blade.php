@@ -1,8 +1,6 @@
 @extends('layouts/admin')
 
 @section('content')
-
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -18,7 +16,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Posts</h3>
-            <a href="{{route('post.create')}}" class="btn btn-default js-add-post" style="right: 10px; position: absolute; bottom: 3px;">
+            <a data-fancybox data-type="ajax" data-src="{{route('post.create')}}" href="javascript:;" class="btn btn-default" style="right: 10px; position: absolute; bottom: 3px;">
                 <i class="fa fa-plus-square"></i>
               </a>
             </div>

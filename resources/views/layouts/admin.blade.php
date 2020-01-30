@@ -9,6 +9,7 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{$app->make('url')->to('/admin')}}/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
@@ -91,6 +92,7 @@
 <!-- DataTables -->
 <script src="{{$app->make('url')->to('/admin')}}/plugins/datatables/jquery.dataTables.js"></script>
 <script src="{{$app->make('url')->to('/admin')}}/plugins/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{$app->make('url')->to('/admin')}}/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
@@ -135,7 +137,6 @@
                     }
                 }
             });
-
         });
 </script>
 </body>

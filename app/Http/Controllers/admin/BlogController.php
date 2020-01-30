@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Posts;
 use App\Category;
+use \Validator;
 
 class BlogController extends Controller
 {
@@ -77,13 +78,20 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'title'       => 'required|max:255' ,
             'description' => 'required',
             'content'     => 'required',
             'image'       => 'required|max:255',
-            'id_cat'       => 'required|max:255',
+            'id_cat'      => 'required|max:255',
         ]);
+        
+        if ($validator->fails()) {
+            echo(json_encode([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ])); die;
+        }
 
         $input = $request->all();
 
@@ -92,7 +100,13 @@ class BlogController extends Controller
         $post->fill($input);
 
         $post->save();
-        return redirect(route('posts.list'));
+
+        $output = [
+            'status' => 'success',
+            'message' => 'success',
+        ];
+
+        echo(json_encode($output)); die;
     }
 
     /**
@@ -129,15 +143,37 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'title'       => 'required|max:255' ,
+            'description' => 'required',
+            'content'     => 'required',
+            'image'       => 'required|max:255',
+            'id_cat'      => 'required|max:255',
+        ]);
+        
+        if ($validator->fails()) {
+            echo(json_encode([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ])); die;
+        }
+
         $post = Posts::find($id);
 
         $post->title = $request->title;
         $post->description = $request->description;
         $post->content = $request->content;
         $post->image = $request->image;
+        $post->id_cat = $request->id_cat;
 
         $post->save();
-        return redirect(route('posts.list'));
+        
+        $output = array(
+            'status'    => 'success',
+            'message'   => 'success',
+        );
+
+        echo(json_encode($output)); die;
     }
 
     /**
