@@ -1,0 +1,158 @@
+<?php
+
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Posts;
+use App\Category;
+
+class BlogController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('admin/posts/index');
+    }
+
+    public function selectPosts()
+    {
+        $query = Posts::select('id_post', 'title', 'description', 'content', 'image')->with('category')->get();
+
+        var_dump($query); die;
+
+        // print_r($query);
+        return datatables($query)
+            // ->order(function ($query) {
+            //     $columns = array(
+            //         0 => 'title',
+            //     );
+
+            //     $dir = request()->order[0]['dir'];
+            //     $col =  $columns[intval(request()->order[0]['column'])];
+
+            //     $query->orderBy($col, $dir);
+            // })
+            ->rawColumns(['action', 'id_post', 'title', 'description', 'content', 'image', 'category'])
+            ->addColumn('action', 'admin/posts/actions')
+            // ->addColumn('image', 'admin/news/image')
+
+            // ->addColumn('date', function($query){
+            //     return date('d.m.Y', strtotime($query->created_at));
+            // })
+
+//             ->addColumn('titleLink', function($query){
+// //                return "<a href = '" . route('fullNewsPage', ['news' => $query['alias']]) . "' target = '_blank'>" . $query['title'] . "</a>";
+//                 return $query['title'];
+//             })
+
+//             ->addColumn('categoryLink', function($query){
+// //                return "<a href = '" . route('categoryNewsPage', ['category' => $query->category['alias']]) . "' target = '_blank'>" . $query->category['name'] . "</a>";
+//                 return $query->category['name'];
+//             })
+
+            ->addColumn('category', function($query){
+                var_dump($query); die;
+                return $query->category['title'];
+            })
+
+            ->toJson();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('admin/posts/modal', ['categories' => Category::all()]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'title'       => 'required|max:255' ,
+            'description' => 'required',
+            'content'     => 'required',
+            'image'       => 'required|max:255',
+            'id_cat'       => 'required|max:255',
+        ]);
+
+        $input = $request->all();
+
+        $post = new Posts();
+
+        $post->fill($input);
+
+        $post->save();
+        return redirect(route('posts.list'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return view('admin/posts/show', ['post' => Posts::find($id)]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        return view('admin/posts/modal', [
+            'post' => Posts::find($id), 
+            'categories' => Category::all()
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $post = Posts::find($id);
+
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->content = $request->content;
+        $post->image = $request->image;
+
+        $post->save();
+        return redirect(route('posts.list'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+       Posts::destroy($id);
+       return redirect(route('posts.list'));
+    }
+}
