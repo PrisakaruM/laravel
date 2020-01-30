@@ -21,6 +21,9 @@ class Posts extends Model
 
     protected $fillable = ['title', 'description', 'content', 'image', 'id_cat'];
 
+    /**
+    * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    */
     public function category()
     {
         return $this->hasOne('App\Category', 'id_cat', 'id_cat');

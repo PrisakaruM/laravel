@@ -21,11 +21,8 @@ class BlogController extends Controller
 
     public function selectPosts()
     {
-        $query = Posts::select('id_post', 'title', 'description', 'content', 'image')->with('category')->get();
+        $query = Posts::select('id_post', 'title', 'description', 'content', 'image', 'id_cat')->with('category');
 
-        var_dump($query); die;
-
-        // print_r($query);
         return datatables($query)
             // ->order(function ($query) {
             //     $columns = array(
@@ -56,7 +53,6 @@ class BlogController extends Controller
 //             })
 
             ->addColumn('category', function($query){
-                var_dump($query); die;
                 return $query->category['title'];
             })
 
