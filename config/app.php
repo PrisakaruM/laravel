@@ -176,6 +176,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
 
+        /*
+        * Helpers Service Providers...
+        */
+        App\Providers\OutputServiceProvider::class,
+
     ],
 
     /*
@@ -228,6 +233,10 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
 
+        /**
+         * Helpers aliases..
+         */
+        'OutputResponse' => App\Helpers\Output\Response::class,
     ],
 
 ];

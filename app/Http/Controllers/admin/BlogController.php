@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Posts;
 use App\Category;
 use \Validator;
+use App\Helpers\Output\Response;
 
 class BlogController extends Controller
 {
@@ -87,10 +88,11 @@ class BlogController extends Controller
         ]);
         
         if ($validator->fails()) {
-            echo(json_encode([
-                'status' => 'error',
-                'errors' => $validator->errors(),
-            ])); die;
+            Response::json_output('', 'error', ['errors' => $validator->errors()]);
+            // echo(json_encode([
+            //     'status' => 'error',
+            //     'errors' => $validator->errors(),
+            // ])); die;
         }
 
         $input = $request->all();
@@ -106,7 +108,8 @@ class BlogController extends Controller
             'message' => 'success',
         ];
 
-        echo(json_encode($output)); die;
+        Response::json_output('success', 'success');
+        // echo(json_encode($output)); die;
     }
 
     /**
@@ -152,10 +155,11 @@ class BlogController extends Controller
         ]);
         
         if ($validator->fails()) {
-            echo(json_encode([
-                'status' => 'error',
-                'errors' => $validator->errors(),
-            ])); die;
+            Response::json_output('', 'error', ['errors' => $validator->errors()]);
+            // echo(json_encode([
+            //     'status' => 'error',
+            //     'errors' => $validator->errors(),
+            // ])); die;
         }
 
         $post = Posts::find($id);
@@ -168,12 +172,13 @@ class BlogController extends Controller
 
         $post->save();
         
-        $output = array(
-            'status'    => 'success',
-            'message'   => 'success',
-        );
+        // $output = array(
+        //     'status'    => 'success',
+        //     'message'   => 'success',
+        // );
 
-        echo(json_encode($output)); die;
+        Response::json_output('success', 'success');
+        // echo(json_encode($output)); die;
     }
 
     /**
