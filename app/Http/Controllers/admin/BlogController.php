@@ -89,10 +89,6 @@ class BlogController extends Controller
         
         if ($validator->fails()) {
             Response::json_output('', 'error', ['errors' => $validator->errors()]);
-            // echo(json_encode([
-            //     'status' => 'error',
-            //     'errors' => $validator->errors(),
-            // ])); die;
         }
 
         $input = $request->all();
@@ -103,13 +99,7 @@ class BlogController extends Controller
 
         $post->save();
 
-        $output = [
-            'status' => 'success',
-            'message' => 'success',
-        ];
-
         Response::json_output('success', 'success');
-        // echo(json_encode($output)); die;
     }
 
     /**
@@ -132,7 +122,7 @@ class BlogController extends Controller
     public function edit($id)
     {
         return view('admin/posts/modal', [
-            'post' => Posts::find($id), 
+            'post'       => Posts::find($id), 
             'categories' => Category::all()
         ]);
     }
@@ -156,10 +146,6 @@ class BlogController extends Controller
         
         if ($validator->fails()) {
             Response::json_output('', 'error', ['errors' => $validator->errors()]);
-            // echo(json_encode([
-            //     'status' => 'error',
-            //     'errors' => $validator->errors(),
-            // ])); die;
         }
 
         $post = Posts::find($id);
@@ -171,14 +157,8 @@ class BlogController extends Controller
         $post->id_cat = $request->id_cat;
 
         $post->save();
-        
-        // $output = array(
-        //     'status'    => 'success',
-        //     'message'   => 'success',
-        // );
 
         Response::json_output('success', 'success');
-        // echo(json_encode($output)); die;
     }
 
     /**
@@ -190,6 +170,7 @@ class BlogController extends Controller
     public function destroy($id)
     {
        Posts::destroy($id);
+       
        return redirect(route('posts.list'));
     }
 }
