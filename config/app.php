@@ -180,6 +180,7 @@ return [
         * Helpers Service Providers...
         */
         App\Providers\OutputServiceProvider::class,
+        App\Providers\ImageServiceProvider::class,
 
     ],
 
@@ -237,6 +238,7 @@ return [
          * Helpers aliases..
          */
         'OutputResponse' => App\Helpers\Output\Response::class,
+        'ImageUpload'    => App\Helpers\Image\Processing::class,
     ],
 
 ];

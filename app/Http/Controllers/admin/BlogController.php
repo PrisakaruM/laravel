@@ -4,10 +4,12 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use App\Posts;
 use App\Category;
 use \Validator;
 use App\Helpers\Output\Response;
+use App\Helpers\Image\Processing;
 
 class BlogController extends Controller
 {
@@ -83,7 +85,7 @@ class BlogController extends Controller
             'title'       => 'required|max:255' ,
             'description' => 'required',
             'content'     => 'required',
-            'image'       => 'required|max:255',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,gif|max:4000',
             'id_cat'      => 'required|max:255',
         ]);
         
@@ -92,11 +94,12 @@ class BlogController extends Controller
         }
 
         $input = $request->all();
-
         $post = new Posts();
-
         $post->fill($input);
+        $post->save();
 
+        $image_name = Processing::upload($request->file('image'), 'img/blogs/' . $post->id_post);
+        $post->image = $image_name;
         $post->save();
 
         Response::json_output('success', 'success');
@@ -140,7 +143,7 @@ class BlogController extends Controller
             'title'       => 'required|max:255' ,
             'description' => 'required',
             'content'     => 'required',
-            'image'       => 'required|max:255',
+            'image'       => 'required|image|mimes:jpeg,png,jpg,gif|max:4000',
             'id_cat'      => 'required|max:255',
         ]);
         
@@ -149,11 +152,13 @@ class BlogController extends Controller
         }
 
         $post = Posts::find($id);
-
+        
+        $image_name = Processing::upload($request->file('image'), 'img/blogs/' . $id, $post->image);
+        
         $post->title = $request->title;
         $post->description = $request->description;
         $post->content = $request->content;
-        $post->image = $request->image;
+        $post->image = $image_name;
         $post->id_cat = $request->id_cat;
 
         $post->save();
@@ -171,6 +176,6 @@ class BlogController extends Controller
     {
        Posts::destroy($id);
        
-       return redirect(route('posts.list'));
+       Response::json_output('success', 'success');
     }
 }

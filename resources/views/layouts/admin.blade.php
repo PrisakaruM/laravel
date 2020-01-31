@@ -16,6 +16,8 @@
   <link rel="stylesheet" href="{{$app->make('url')->to('/admin')}}/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{$app->make('url')->to('/admin')}}/dist/css/adminlte.min.css">
+  <!-- jQuery -->
+<script src="{{$app->make('url')->to('/admin')}}/plugins/jquery/jquery.min.js"></script>
   <!-- Google Font: Source Sans Pro -->
 </head>
 <body class="hold-transition sidebar-mini">
@@ -85,8 +87,7 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="{{$app->make('url')->to('/admin')}}/plugins/jquery/jquery.min.js"></script>
+
 <!-- Bootstrap 4 -->
 <script src="{{$app->make('url')->to('/admin')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables -->
