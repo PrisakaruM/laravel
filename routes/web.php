@@ -19,6 +19,9 @@ Route::prefix('admin')->group(function () {
     Route::resource('post', 'admin\BlogController');
     Route::post('post/table', 'admin\BlogController@selectPosts')->name('posts.list');
     Route::post('post/store', 'admin\BlogController@store')->name('posts.store');
+    Route::get('login', 'admin\UserController@login_view')->name('login.view');
+    Route::post('login', 'admin\UserController@login')->name('login.processing');
+    Route::get('logout', 'admin\UserController@logout')->name('logout');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
