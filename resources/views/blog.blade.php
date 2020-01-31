@@ -34,6 +34,7 @@
         <!-- The Band Section -->
         @foreach ($data as $post)
             <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
+                <img src="{{$app->make('url')->to('/')}}/img/blogs/{{$post['id_post']}}/{{$post['image']}}" alt="" width="500">
                 <h2 class="w3-wide"><a href="{{$app->make('url')->to('/post/' . $post['id_post'])}}">{{$post['title']}}</a></h2>
                 <p class="w3-justify">{{$post['content']}}</p>
             </div>

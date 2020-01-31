@@ -51,7 +51,7 @@
 
   <script>
     $(function() {
-      $("body").on('click', '.js-destroy', function(e){
+      $("body").on('click', '.js-destroy', function(e) {
         e.preventDefault();
 
         const Toast = Swal.mixin({
@@ -68,6 +68,7 @@
 
         var url = $(this).data("url");
         var token = $(this).data("token");
+
         $.ajax(
         {
             url: url,
@@ -77,7 +78,7 @@
                 "_method": 'DELETE',
                 "_token": token,
             },
-            success: function ()
+            success: function()
             {
               $('#posts_table').DataTable().draw();
 
@@ -90,6 +91,5 @@
       });
     });
   </script>
-
 
   @endsection

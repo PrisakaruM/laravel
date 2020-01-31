@@ -1,0 +1,1 @@
+<img src="{{$app->make('url')->to('/')}}/img/blogs/{{$id_post}}/{{$image}}" alt="" width="150">

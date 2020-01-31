@@ -109,13 +109,13 @@
                 responsive: true,
                 //"searching": false,
                 stateSave: true,
-                // "order": [ 4, 'desc' ],
+                "order": [ 2, 'desc' ],
 
                 "columnDefs": [
                     {orderable: true, searchable: true, "targets": 0},
-                    {orderable: false, searchable: true, "targets": 1},
-                    {orderable: false, searchable: true, "targets": 2},
-                    {orderable: false, className: "w-150", searchable: false, "targets": 3},
+                    {orderable: true, searchable: true, "targets": 1},
+                    {orderable: true, searchable: true, "targets": 2},
+                    {orderable: true, className: "w-150", searchable: false, "targets": 3},
                     {orderable: false, className: "w-120", searchable: false, "targets": 4},
                     {orderable: false, className: "w-120", searchable: false, "targets": 5},
                 ],

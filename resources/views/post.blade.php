@@ -24,6 +24,7 @@
         <!-- The Band Section -->
         <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="band">
             <h2 class="w3-wide">{{$post->title}}</h2>
+            <img src="{{$app->make('url')->to('/')}}/img/blogs/{{$post['id_post']}}/{{$post['image']}}" alt="" width="700">
             <p class="w3-justify">{{$post->content}}</p>
         </div>
         

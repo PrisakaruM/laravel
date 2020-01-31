@@ -4,7 +4,6 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use App\Posts;
 use App\Category;
 use \Validator;
@@ -23,39 +22,32 @@ class BlogController extends Controller
         return view('admin/posts/index');
     }
 
+    /**
+     * Display Json for Data Table.
+     *
+     * @return Json
+     */
     public function selectPosts()
     {
         $query = Posts::select('id_post', 'title', 'description', 'content', 'image', 'id_cat')->with('category');
 
         return datatables($query)
-            // ->order(function ($query) {
-            //     $columns = array(
-            //         0 => 'title',
-            //     );
+            ->order(function ($query) {
+                $columns = [
+                    0 => 'id_post',
+                    1 => 'title',
+                    2 => 'description',
+                    3 => 'content',
+                ];
 
-            //     $dir = request()->order[0]['dir'];
-            //     $col =  $columns[intval(request()->order[0]['column'])];
+                $dir = request()->order[0]['dir'];
+                $col =  $columns[intval(request()->order[0]['column'])];
 
-            //     $query->orderBy($col, $dir);
-            // })
+                $query->orderBy($col, $dir);
+            })
             ->rawColumns(['action', 'id_post', 'title', 'description', 'content', 'image', 'category'])
             ->addColumn('action', 'admin/posts/actions')
-            // ->addColumn('image', 'admin/news/image')
-
-            // ->addColumn('date', function($query){
-            //     return date('d.m.Y', strtotime($query->created_at));
-            // })
-
-//             ->addColumn('titleLink', function($query){
-// //                return "<a href = '" . route('fullNewsPage', ['news' => $query['alias']]) . "' target = '_blank'>" . $query['title'] . "</a>";
-//                 return $query['title'];
-//             })
-
-//             ->addColumn('categoryLink', function($query){
-// //                return "<a href = '" . route('categoryNewsPage', ['category' => $query->category['alias']]) . "' target = '_blank'>" . $query->category['name'] . "</a>";
-//                 return $query->category['name'];
-//             })
-
+            ->addColumn('image', 'admin/posts/image')
             ->addColumn('category', function($query){
                 return $query->category['title'];
             })
