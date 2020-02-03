@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Helpers\Image\Processing;
 use App\Helpers\Output\Response;
+use \Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -65,13 +67,45 @@ class UserController extends Controller
     }
 
     /**
+     * Return view for changing password
+     * 
+     * @return view
+     */
+    public function passwordChange($id)
+    {
+        return view('admin/user/password', ['id' => $id]);
+    }
+
+    /**
      * return response
      * 
      * @return \Illuminate\Http\Response
      */
-    public function passwordChange(Request $request)
+    public function passwordStore($id, Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'old_password'         => 'required' ,
+            'new_password'         => 'min:3|required_with:new_confirm_password|same:new_confirm_password',
+            'new_confirm_password' => 'min:3'
+        ]);
+        
+        if ($validator->fails()) {
+            Response::json_output('', 'error', ['errors' => $validator->errors()]);
+        }
 
+        $admin = User::find($id);
+
+        if (Hash::check($request->old_password, $admin->password)) {
+            $admin->password = $request->new_password;
+
+            if (!$admin->update()) {
+                Response::json_output('Query error!', 'error');
+            }
+
+            Response::json_output('success', 'success');
+        }
+
+        Response::json_output('Old password is not correct!', 'error');
     }
 
     /**

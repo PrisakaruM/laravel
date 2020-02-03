@@ -26,7 +26,8 @@ Route::prefix('admin')->group(function () {
     Route::post('users/table', 'admin\UserController@usersData')->name('users.list');
     Route::get('users/avatar/{id}', 'admin\UserController@avatarChange')->name('user.avatar');
     Route::put('users/avatar/{id}', 'admin\UserController@avatarUpload')->name('user.avatar.upload');
-    Route::post('users/password/{id}', 'admin\UserController@passwordChange')->name('user.password');
+    Route::get('users/password/{id}', 'admin\UserController@passwordChange')->name('user.password.modal');
+    Route::put('users/password/{id}', 'admin\UserController@passwordStore')->name('user.password.store');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

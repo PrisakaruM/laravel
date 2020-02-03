@@ -83,48 +83,4 @@
               });
           });
   </script>
-{{-- 
-  <script>
-    $(function() {
-      $("body").on('click', '.js-destroy', function(e) {
-        e.preventDefault();
-
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          timer: 3000,
-          timerProgressBar: true,
-          showConfirmButton: false,
-          onOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        });
-
-        var url = $(this).data("url");
-        var token = $(this).data("token");
-
-        $.ajax(
-        {
-            url: url,
-            method: 'POST',
-            dataType: "JSON",
-            data: {
-                "_method": 'DELETE',
-                "_token": token,
-            },
-            success: function()
-            {
-              $('#posts_table').DataTable().draw();
-
-              Toast.fire({
-                  icon: 'success',
-                  title: 'success'
-              });
-            }
-        });
-      });
-    });
-  </script> --}}
-
   @endsection
