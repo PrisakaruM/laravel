@@ -22,16 +22,14 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <table id="posts_table" class="table table-bordered table-striped">
+              <table id="users_table" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <td>ID</td>
-                  <td>Title</td>
-                  <td>Description</td>
-                  <td>Content</td>
-                  <td>Image</td>
-                  <td>Category</td>
-                  <td>Action</td>
+                  <td>name</td>
+                  <td>email</td>
+                  <td>image</td>
+                  <td>actions</td>
                 </tr>
                 </tfoot>
               </table>
@@ -51,7 +49,7 @@
   <script>
     var dt;
           $(document).ready(function() {
-              dt = $('#posts_table').DataTable( {
+              dt = $('#users_table').DataTable( {
                   "processing": true,
                   "serverSide": true,
                   "autoWidth": true,
@@ -62,25 +60,21 @@
   
                   "columnDefs": [
                       {orderable: true, searchable: true, "targets": 0},
-                      {orderable: true, searchable: true, "targets": 1},
+                      {orderable: true, className: "w-100", searchable: true, "targets": 1},
                       {orderable: true, searchable: true, "targets": 2},
-                      {orderable: true, className: "w-150", searchable: false, "targets": 3},
-                      {orderable: false, className: "w-120", searchable: false, "targets": 4},
-                      {orderable: false, className: "w-120", searchable: false, "targets": 5},
+                      {orderable: false, className: "w-150", searchable: true, "targets": 3},
+                      {orderable: false, searchable: true, "targets": 4},
                   ],
                   "columns": [
-                      {"data": "id_post"},
-                      {"data": "title"},
-                      {"data": "description"},
-                      {"data": "content"},
+                      {"data": "id"},
+                      {"data": "name"},
+                      {"data": "email"},
                       {"data": "image"},
-                      {"data": "category"},
                       {"data": "action"},
-                      // {"data": "date"},
                   ],
   
                   "ajax": {
-                      url: "{{route('posts.list')}}",
+                      url: "{{route('users.list')}}",
                       type: 'POST',
                       headers: {
                         'X-CSRF-TOKEN': '{{csrf_token()}}'
@@ -89,6 +83,7 @@
               });
           });
   </script>
+{{-- 
   <script>
     $(function() {
       $("body").on('click', '.js-destroy', function(e) {
@@ -130,6 +125,6 @@
         });
       });
     });
-  </script>
+  </script> --}}
 
   @endsection

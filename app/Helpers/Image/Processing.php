@@ -24,4 +24,21 @@ class Processing {
 
         return $profileImage; 
     }
+
+    public static function uploadBase64 ($base64, $old_image)
+    {
+        $image_parts = explode(";base64,", $base64);
+        $extension = explode("image/", $image_parts[0]);
+        $imageName = time() .'.' . $extension[1];
+
+        if (!\File::put(public_path() . '/img/admin/' . $imageName, base64_decode($image_parts[1]))) {
+            return false;
+        }
+
+        if (!empty($old_image)) {
+            File::delete(public_path() . '/img/admin/' . $old_image);
+        }
+
+        return $imageName;
+    }
 }

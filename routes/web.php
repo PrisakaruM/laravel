@@ -22,6 +22,11 @@ Route::prefix('admin')->group(function () {
     Route::get('login', 'admin\UserController@login_view')->name('login.view');
     Route::post('login', 'admin\UserController@login')->name('login.processing');
     Route::get('logout', 'admin\UserController@logout')->name('logout');
+    Route::get('users', 'admin\UserController@index')->name('users.index');
+    Route::post('users/table', 'admin\UserController@usersData')->name('users.list');
+    Route::get('users/avatar/{id}', 'admin\UserController@avatarChange')->name('user.avatar');
+    Route::put('users/avatar/{id}', 'admin\UserController@avatarUpload')->name('user.avatar.upload');
+    Route::post('users/password/{id}', 'admin\UserController@passwordChange')->name('user.password');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

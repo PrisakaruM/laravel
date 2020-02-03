@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>AdminLTE 3 | DataTables</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +34,10 @@
         <a href="{{$app->make('url')->to('/admin')}}/index3.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Posts</a>
+        <a href="{{route('post.index')}}" class="nav-link">Posts</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{route('users.index')}}" class="nav-link">Admin</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('logout')}}" class="nav-link">Logout</a>
@@ -62,9 +66,15 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
               <li class="nav-item">
-                <a href="../UI/buttons.html" class="nav-link">
+                <a href="{{route('post.index')}}" class="nav-link">
                   <i class="fas fa-file-alt nav-icon"></i>
                   <p>Posts</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('users.index')}}" class="nav-link">
+                  <i class="fas fa-file-alt nav-icon"></i>
+                  <p>Admin</p>
                 </a>
               </li>
         </ul>
@@ -102,46 +112,5 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{$app->make('url')->to('/admin')}}/dist/js/demo.js"></script>
 <!-- page script -->
-<script>
-  var dt;
-        $(document).ready(function() {
-            dt = $('#posts_table').DataTable( {
-                "processing": true,
-                "serverSide": true,
-                "autoWidth": true,
-                responsive: true,
-                //"searching": false,
-                stateSave: true,
-                "order": [ 2, 'desc' ],
-
-                "columnDefs": [
-                    {orderable: true, searchable: true, "targets": 0},
-                    {orderable: true, searchable: true, "targets": 1},
-                    {orderable: true, searchable: true, "targets": 2},
-                    {orderable: true, className: "w-150", searchable: false, "targets": 3},
-                    {orderable: false, className: "w-120", searchable: false, "targets": 4},
-                    {orderable: false, className: "w-120", searchable: false, "targets": 5},
-                ],
-                "columns": [
-                    {"data": "id_post"},
-                    {"data": "title"},
-                    {"data": "description"},
-                    {"data": "content"},
-                    {"data": "image"},
-                    {"data": "category"},
-                    {"data": "action"},
-                    // {"data": "date"},
-                ],
-
-                "ajax": {
-                    url: "{{route('posts.list')}}",
-                    type: 'POST',
-                    headers: {
-                      'X-CSRF-TOKEN': '{{csrf_token()}}'
-                    }
-                }
-            });
-        });
-</script>
 </body>
 </html>
